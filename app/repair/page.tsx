@@ -33,7 +33,14 @@ export default function Repair() {
       description: form.description,
       status: 'pending',
       image_url: imageUrl,
+      type: 'repair',
     }])
+
+    await fetch('/api/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: form.name, contact: form.contact, description: form.description, type: 'repair' }),
+    })
 
     setSubmitting(false)
     setSubmitted(true)

@@ -35,6 +35,12 @@ export default function Sell() {
       type: 'sell_offer',
     }])
 
+    await fetch('/api/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: form.name, contact: form.contact, description: form.description, type: 'sell_offer' }),
+    })
+
     setSubmitting(false)
     setSubmitted(true)
   }

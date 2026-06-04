@@ -8,7 +8,8 @@ import ThemeToggle from './ThemeToggle'
 
 const links = [
   { href: '/', label: 'Home' },
-  { href: '/services', label: 'Services & Pricing' },
+  { href: '/services', label: 'Services' },
+  { href: '/boards', label: 'For Sale' },
   { href: '/repair', label: 'Submit Repair' },
   { href: '/contact', label: 'Contact' },
 ]
