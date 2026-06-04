@@ -423,8 +423,15 @@ export default function Admin() {
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) router.push('/login')
-      else setUser(data.user)
+      const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL
+      if (!data.user) {
+        router.push('/login')
+      } else if (adminEmail && data.user.email !== adminEmail) {
+        // Not the admin — sign them out and send home
+        supabase.auth.signOut().then(() => router.push('/'))
+      } else {
+        setUser(data.user)
+      }
     })
   }, [])
 

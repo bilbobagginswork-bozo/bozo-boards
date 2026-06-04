@@ -75,9 +75,8 @@ export default function Login() {
         </form>
 
         <p className="text-white/30 text-sm text-center mt-6">
-          Don&apos;t have an account?{' '}
-          <Link href="/register" className="text-white hover:text-[#2BD9C6] transition">
-            Sign up
+          <Link href="/" className="text-white/30 hover:text-white transition">
+            ← Back to site
           </Link>
         </p>
 

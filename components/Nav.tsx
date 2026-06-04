@@ -53,14 +53,8 @@ export default function Nav() {
           ))}
         </nav>
 
-        {/* Right side: auth + toggle */}
+        {/* Right side: toggle only (login is admin-only, not public) */}
         <div className="hidden md:flex items-center gap-2">
-          <Link href="/login" className="px-4 py-2 text-sm font-bold uppercase tracking-wide text-neutral-500 dark:text-white/70 hover:text-neutral-900 dark:hover:text-white transition">
-            Login
-          </Link>
-          <Link href="/register" className="px-4 py-2 text-sm font-bold uppercase tracking-wide bg-[#2BD9C6] text-black rounded hover:bg-[#1fc4b3] transition">
-            Sign Up
-          </Link>
           <ThemeToggle />
         </div>
 
@@ -94,8 +88,6 @@ export default function Nav() {
             </Link>
           ))}
           <hr className="border-neutral-200 dark:border-white/10 my-2" />
-          <Link href="/login" onClick={() => setOpen(false)} className="py-2 text-sm font-bold uppercase tracking-wide text-neutral-500 dark:text-white/70">Login</Link>
-          <Link href="/register" onClick={() => setOpen(false)} className="py-2 text-sm font-bold uppercase tracking-wide text-[#2BD9C6]">Sign Up</Link>
         </div>
       )}
     </header>
