@@ -7,7 +7,6 @@ function Board() {
       <path d="M9,1 C13,3 16,11 16,23 C16,35 13,42 9,45 C5,42 2,35 2,23 C2,11 5,3 9,1 Z"
         fill="white" stroke="#2BD9C6" strokeWidth="1.5" strokeLinejoin="round"/>
       <line x1="9" y1="1" x2="9" y2="45" stroke="#2BD9C6" strokeWidth="0.75" strokeDasharray="3 2"/>
-      <path d="M7,43 L3,50 L12,47 L9,43 Z" fill="#2BD9C6"/>
     </svg>
   )
 }
@@ -27,7 +26,6 @@ function BrokenBoard() {
       <line x1="14" y1="22" x2="18" y2="18" stroke="#ef4444" strokeWidth="1.2"/>
       <line x1="15" y1="25" x2="20" y2="24" stroke="#ef4444" strokeWidth="1.2"/>
       {/* Fin */}
-      <path d="M8,46 L4,52 L13,49 L10,46 Z" fill="#2BD9C6" transform="translate(1,0)"/>
     </svg>
   )
 }
