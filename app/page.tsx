@@ -81,7 +81,7 @@ export default function Home() {
           <div className="mt-10 mb-0 flex flex-col sm:flex-row items-start gap-6 sm:gap-10">
             <div>
               <p className="font-display text-white text-3xl md:text-4xl leading-tight max-w-xs font-bold">
-                Your board&apos;s not dead yet.
+                Don&apos;t be a bozo, fix your board.
               </p>
               <p className="text-white/50 text-sm mt-2 max-w-xs leading-relaxed">
                 We fix dings, sell used shapes, and buy boards you no longer ride.
