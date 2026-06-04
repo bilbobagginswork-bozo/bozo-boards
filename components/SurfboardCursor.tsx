@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState, useCallback } from 'react'
+import { usePathname } from 'next/navigation'
 
 function Board() {
   return (
@@ -31,6 +32,7 @@ function BrokenBoard() {
 }
 
 export default function SurfboardCursor() {
+  const pathname = usePathname()
   const [pos, setPos] = useState({ x: -200, y: -200 })
   const [broken, setBroken] = useState(false)
   const [isTouch, setIsTouch] = useState(true)
@@ -40,9 +42,16 @@ export default function SurfboardCursor() {
     setTimeout(() => setBroken(false), 600)
   }, [])
 
+  const isAdmin = pathname.startsWith('/admin')
+
   useEffect(() => {
+    if (isAdmin) {
+      document.body.classList.remove('hide-cursor')
+      return
+    }
     const hasMouse = window.matchMedia('(pointer: fine)').matches
     if (!hasMouse) return
+    document.body.classList.add('hide-cursor')
     setIsTouch(false)
 
     const onMove = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY })
@@ -53,10 +62,11 @@ export default function SurfboardCursor() {
     return () => {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mousedown', triggerBreak)
+      document.body.classList.remove('hide-cursor')
     }
-  }, [triggerBreak])
+  }, [triggerBreak, isAdmin])
 
-  if (isTouch) return null
+  if (isTouch || pathname.startsWith('/admin')) return null
 
   return (
     <div
