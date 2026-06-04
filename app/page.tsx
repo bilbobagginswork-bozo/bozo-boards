@@ -51,12 +51,6 @@ export default function Home() {
         </div>
 
 
-        {/* Vertical side text — left edge */}
-        <div className="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 -rotate-90 origin-center hidden sm:block z-10">
-          <p className="text-[10px] font-black uppercase tracking-[0.45em] text-white/30 whitespace-nowrap">
-            DINGS FIXED · BOARDS SOLD · SW UK
-          </p>
-        </div>
 
         {/* Main content */}
         <div className="relative z-10 max-w-6xl pl-4 sm:pl-8">
