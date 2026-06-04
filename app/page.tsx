@@ -44,9 +44,11 @@ export default function Home() {
 
         {/* Background photo */}
         <div className="absolute inset-0 z-0">
-          <img src="/images/hero.jpg" alt="" className="w-full h-full object-cover object-center" />
-          {/* Dark gradient overlay — heavier at top/bottom, lighter in middle */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
+          <img src="/images/hero.jpg" alt="" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} />
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-black/60" />
+          {/* Extra gradient to darken bottom where buttons sit */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
         </div>
 
         {/* Teal accent bar right */}
@@ -91,11 +93,11 @@ export default function Home() {
                 We fix dings, sell used shapes, and buy boards you no longer ride.
               </p>
             </div>
-            <div className="flex flex-col gap-3 shrink-0 sm:mt-1">
-              <Link href="/repair" className="px-7 py-3.5 bg-[#2BD9C6] text-black font-black uppercase tracking-wide text-sm rounded hover:bg-[#1fc4b3] transition">
+            <div className="flex flex-row gap-3 shrink-0 sm:mt-1 flex-wrap">
+              <Link href="/repair" className="px-6 py-3 bg-[#2BD9C6] text-black font-black uppercase tracking-wide text-sm rounded hover:bg-[#1fc4b3] transition">
                 Submit a Repair
               </Link>
-              <Link href="/services" className="px-7 py-3.5 border-2 border-white/30 text-white font-black uppercase tracking-wide text-sm rounded hover:border-white hover:bg-white/10 transition">
+              <Link href="/services" className="px-6 py-3 border-2 border-white/30 text-white font-black uppercase tracking-wide text-sm rounded hover:border-white hover:bg-white/10 transition">
                 View Pricing
               </Link>
             </div>
