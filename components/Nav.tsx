@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import ThemeToggle from './ThemeToggle'
+import CursorToggle from './CursorToggle'
 
 const links = [
   { href: '/', label: 'Home' },
@@ -55,6 +56,7 @@ export default function Nav() {
 
         {/* Right side: toggle only (login is admin-only, not public) */}
         <div className="hidden md:flex items-center gap-2">
+          <CursorToggle />
           <ThemeToggle />
         </div>
 
