@@ -47,6 +47,7 @@ export default function SurfboardCursor() {
   useEffect(() => {
     if (isAdmin) {
       document.body.classList.remove('hide-cursor')
+      setIsTouch(true)
       return
     }
     const hasMouse = window.matchMedia('(pointer: fine)').matches
@@ -66,7 +67,7 @@ export default function SurfboardCursor() {
     }
   }, [triggerBreak, isAdmin])
 
-  if (isTouch || pathname.startsWith('/admin')) return null
+  if (isTouch) return null
 
   return (
     <div
