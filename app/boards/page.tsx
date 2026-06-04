@@ -4,11 +4,6 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 
-export const metadata = {
-  title: 'Used Surfboards For Sale',
-  description: 'Used surfboards for sale in the South West UK. All boards repaired and checked. Shortboards, mid-lengths, longboards and foamies.',
-}
-
 export default function Boards() {
   const [boards, setBoards] = useState<any[]>([])
   const [loading, setLoading] = useState(true)

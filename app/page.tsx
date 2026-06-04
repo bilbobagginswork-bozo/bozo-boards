@@ -1,10 +1,4 @@
 import Link from 'next/link'
-import { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Bozo Boards — Surfboard Repairs South West UK',
-  description: 'Surfboard ding repairs done right. We fix boards, sell used shapes, and buy boards you no longer ride. Based in the South West UK. Fast turnaround on all repairs.',
-}
 
 const structuredData = {
   '@context': 'https://schema.org',
