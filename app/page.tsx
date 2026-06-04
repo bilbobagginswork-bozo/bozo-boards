@@ -1,8 +1,30 @@
 import Link from 'next/link'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Bozo Boards — Surfboard Repairs South West UK',
+  description: 'Surfboard ding repairs done right. We fix boards, sell used shapes, and buy boards you no longer ride. Based in the South West UK. Fast turnaround on all repairs.',
+}
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Bozo Boards',
+  description: 'Surfboard ding repairs, used boards for sale, and we buy unwanted surfboards.',
+  url: 'https://bozo-boards.com',
+  logo: 'https://bozo-boards.com/logo.png',
+  image: 'https://bozo-boards.com/logo.png',
+  areaServed: 'South West UK',
+  address: { '@type': 'PostalAddress', addressRegion: 'South West England', addressCountry: 'GB' },
+  priceRange: '££',
+  openingHours: ['Mo-Fr 08:00-17:00', 'Sa 09:00-14:00'],
+  sameAs: ['https://bozo-boards.com'],
+}
 
 export default function Home() {
   return (
     <main className="flex-1 overflow-hidden">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
 
       {/* ── HERO ── */}
       <section className="relative flex flex-col justify-end pt-24 pb-16 px-4 bg-[#F7F4EE] dark:bg-[#0d0c0a] overflow-hidden">

@@ -4,6 +4,11 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 
+export const metadata = {
+  title: 'Services & Pricing',
+  description: 'Surfboard repair prices for dings, cracks, delamination, fin box repairs and more. Used boards for sale. South West UK.',
+}
+
 const FALLBACK_REPAIRS = [
   { id: 1, name: 'Small ding repair',      description: 'Single pressure ding or small crack, up to 3cm', price: '$20' },
   { id: 2, name: 'Medium ding repair',     description: 'Larger crack, multiple dings, or rail damage',   price: '$40' },
