@@ -21,6 +21,7 @@ function RequestsPanel({ type }: { type: 'repair' | 'sell_offer' }) {
   const [replyText, setReplyText] = useState('')
   const [sendingReply, setSendingReply] = useState(false)
   const [replyStatus, setReplyStatus] = useState<Record<number, string>>({})
+  const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null)
 
   const doFetch = async () => {
     setLoading(true)
@@ -43,9 +44,9 @@ function RequestsPanel({ type }: { type: 'repair' | 'sell_offer' }) {
   }
 
   const deleteRequest = async (id: number) => {
-    if (!confirm('Delete this request? This cannot be undone.')) return
     await supabase.from('repair_requests').delete().eq('id', id)
     setItems(prev => prev.filter(r => r.id !== id))
+    setConfirmDeleteId(null)
   }
 
   const sendReply = async (req: any) => {
@@ -103,38 +104,49 @@ function RequestsPanel({ type }: { type: 'repair' | 'sell_offer' }) {
                 </button>
               ))}
               <div className="flex-1" />
-              {isEmail && (
-                <button
-                  onClick={() => { setReplyingId(replyingId === req.id ? null : req.id); setReplyText('') }}
-                  className="px-3 py-1 border border-[#2BD9C6] text-[#2BD9C6] rounded-lg text-sm hover:bg-[#2BD9C6]/10 transition"
-                >
-                  {replyingId === req.id ? 'Cancel' : 'Reply'}
+              <button
+                onClick={() => { setReplyingId(replyingId === req.id ? null : req.id); setReplyText('') }}
+                className="px-3 py-1 border border-[#2BD9C6] text-[#2BD9C6] rounded-lg text-sm hover:bg-[#2BD9C6]/10 transition"
+              >
+                {replyingId === req.id ? 'Cancel' : 'Reply'}
+              </button>
+              {confirmDeleteId === req.id ? (
+                <span className="flex items-center gap-1">
+                  <button onClick={() => deleteRequest(req.id)} className="px-3 py-1 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition">Confirm</button>
+                  <button onClick={() => setConfirmDeleteId(null)} className="px-3 py-1 border rounded-lg text-sm hover:bg-neutral-100 transition">Cancel</button>
+                </span>
+              ) : (
+                <button onClick={() => setConfirmDeleteId(req.id)} className="px-3 py-1 border border-red-200 text-red-400 rounded-lg text-sm hover:bg-red-50 transition">
+                  Delete
                 </button>
               )}
-              <button
-                onClick={() => deleteRequest(req.id)}
-                className="px-3 py-1 border border-red-200 text-red-500 rounded-lg text-sm hover:bg-red-50 transition"
-              >
-                Delete
-              </button>
             </div>
 
             {/* Reply box */}
             {replyingId === req.id && (
               <div className="mt-4 space-y-2">
-                <textarea
-                  className="w-full border border-neutral-200 rounded-lg px-3 py-2 text-sm min-h-[100px] focus:outline-none focus:border-[#2BD9C6] transition"
-                  placeholder={`Write your reply to ${req.name}…`}
-                  value={replyText}
-                  onChange={e => setReplyText(e.target.value)}
-                />
-                <button
-                  disabled={!replyText.trim() || sendingReply}
-                  onClick={() => sendReply(req)}
-                  className="px-4 py-2 bg-black text-white text-sm rounded-lg hover:bg-neutral-800 disabled:opacity-50 transition"
-                >
-                  {sendingReply ? 'Sending…' : `Send to ${req.contact}`}
-                </button>
+                {!isEmail && (
+                  <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                    This contact left a phone number — call them directly: <strong>{req.contact}</strong>
+                  </p>
+                )}
+                {isEmail && (
+                  <>
+                    <textarea
+                      className="w-full border border-neutral-200 rounded-lg px-3 py-2 text-sm min-h-[100px] focus:outline-none focus:border-[#2BD9C6] transition"
+                      placeholder={`Write your reply to ${req.name}…`}
+                      value={replyText}
+                      onChange={e => setReplyText(e.target.value)}
+                    />
+                    <button
+                      disabled={!replyText.trim() || sendingReply}
+                      onClick={() => sendReply(req)}
+                      className="px-4 py-2 bg-black text-white text-sm rounded-lg hover:bg-neutral-800 disabled:opacity-50 transition"
+                    >
+                      {sendingReply ? 'Sending…' : `Send to ${req.contact}`}
+                    </button>
+                  </>
+                )}
               </div>
             )}
 
@@ -200,10 +212,12 @@ function BoardsPanel() {
     setBoards(prev => prev.map(b => b.id === id ? { ...b, visible } : b))
   }
 
+  const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null)
+
   const remove = async (id: number) => {
-    if (!confirm('Delete this board?')) return
     await supabase.from('boards_for_sale').delete().eq('id', id)
     setBoards(prev => prev.filter(b => b.id !== id))
+    setConfirmDeleteId(null)
   }
 
   const startEdit = (b: any) => {
@@ -233,7 +247,14 @@ function BoardsPanel() {
                 {b.visible ? 'Hide' : 'Show'}
               </button>
               <button onClick={() => startEdit(b)} className="text-xs px-2 py-1 border rounded-lg hover:bg-neutral-100 transition">Edit</button>
-              <button onClick={() => remove(b.id)} className="text-xs px-2 py-1 border border-red-200 text-red-500 rounded-lg hover:bg-red-50 transition">✕</button>
+              {confirmDeleteId === b.id ? (
+                <>
+                  <button onClick={() => remove(b.id)} className="text-xs px-2 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">Sure?</button>
+                  <button onClick={() => setConfirmDeleteId(null)} className="text-xs px-2 py-1 border rounded-lg hover:bg-neutral-100 transition">No</button>
+                </>
+              ) : (
+                <button onClick={() => setConfirmDeleteId(b.id)} className="text-xs px-2 py-1 border border-red-200 text-red-400 rounded-lg hover:bg-red-50 transition">✕</button>
+              )}
             </div>
           </div>
         </div>
@@ -313,10 +334,12 @@ function PricingPanel() {
     fetch()
   }
 
+  const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null)
+
   const remove = async (id: number) => {
-    if (!confirm('Delete this service?')) return
     await supabase.from('services').delete().eq('id', id)
     setServices(prev => prev.filter(s => s.id !== id))
+    setConfirmDeleteId(null)
   }
 
   const startEdit = (s: any) => { setEditing(s); setForm({ name: s.name, description: s.description, price: s.price }); setAdding(true) }
@@ -335,7 +358,14 @@ function PricingPanel() {
           <p className="font-black text-[#2BD9C6] text-lg shrink-0">{s.price}</p>
           <div className="flex gap-2 shrink-0">
             <button onClick={() => startEdit(s)} className="text-xs px-2 py-1 border rounded-lg hover:bg-neutral-100 transition">Edit</button>
-            <button onClick={() => remove(s.id)} className="text-xs px-2 py-1 border border-red-200 text-red-500 rounded-lg hover:bg-red-50 transition">✕</button>
+            {confirmDeleteId === s.id ? (
+              <>
+                <button onClick={() => remove(s.id)} className="text-xs px-2 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">Sure?</button>
+                <button onClick={() => setConfirmDeleteId(null)} className="text-xs px-2 py-1 border rounded-lg hover:bg-neutral-100 transition">No</button>
+              </>
+            ) : (
+              <button onClick={() => setConfirmDeleteId(s.id)} className="text-xs px-2 py-1 border border-red-200 text-red-400 rounded-lg hover:bg-red-50 transition">✕</button>
+            )}
           </div>
         </div>
       ))}

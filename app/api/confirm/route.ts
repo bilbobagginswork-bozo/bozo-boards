@@ -11,37 +11,63 @@ export async function POST(req: NextRequest) {
   const isEmail = contact.includes('@')
   const isRepair = type !== 'sell_offer'
 
-  const subject = isRepair
-    ? 'We got your repair request — Bozo Boards'
-    : 'We got your sell offer — Bozo Boards'
+  // ── Email to customer ──────────────────────────────────────────────────────
+  const customerSubject = isRepair
+    ? `Repair request received — Bozo Boards`
+    : `We've got your offer — Bozo Boards`
 
   const customerBody = isRepair
-    ? `Hi ${name},\n\nThanks for submitting your repair request. We'll take a look and get back to you with a quote shortly — usually same day.\n\nWhat you told us:\n${description}\n\nCheers,\nBozo Boards\nSouth West UK`
-    : `Hi ${name},\n\nThanks for sending over your board details. We'll take a look and come back to you with an offer.\n\nWhat you told us:\n${description}\n\nCheers,\nBozo Boards\nSouth West UK`
+    ? `Hi ${name},
 
-  const adminBody = `New ${isRepair ? 'repair request' : 'sell offer'} from ${name}\n\nContact: ${contact}\n\nDetails:\n${description}\n\nView in admin: https://${req.headers.get('host')}/admin`
+Thanks for getting in touch. We've received your repair request and will get back to you with a quote — usually the same day.
+
+Here's what you sent us:
+"${description}"
+
+If you need to reach us in the meantime, just reply to this email.
+
+Cheers,
+Bozo Boards
+South West UK`
+    : `Hi ${name},
+
+Thanks for reaching out. We've received your details and will come back to you with an offer shortly.
+
+Here's what you told us about the board:
+"${description}"
+
+If you need to reach us in the meantime, just reply to this email.
+
+Cheers,
+Bozo Boards
+South West UK`
+
+  // ── Email to admin ─────────────────────────────────────────────────────────
+  const adminSubject = isRepair
+    ? `🔧 New repair request from ${name}`
+    : `💰 New sell offer from ${name}`
+
+  const adminBody = `${isRepair ? 'REPAIR REQUEST' : 'SELL OFFER'}
+─────────────────────────────
+Name:    ${name}
+Contact: ${contact}
+
+Details:
+${description}
+─────────────────────────────
+View in admin: https://${req.headers.get('host')}/admin`
 
   const sends = []
 
-  if (isEmail) {
+  if (isEmail && process.env.RESEND_API_KEY) {
     sends.push(
-      resend.emails.send({
-        from: FROM,
-        to: contact,
-        subject,
-        text: customerBody,
-      })
+      resend.emails.send({ from: FROM, to: contact, subject: customerSubject, text: customerBody })
     )
   }
 
-  if (ADMIN_EMAIL) {
+  if (ADMIN_EMAIL && process.env.RESEND_API_KEY) {
     sends.push(
-      resend.emails.send({
-        from: FROM,
-        to: ADMIN_EMAIL,
-        subject: `[Bozo Boards] New ${isRepair ? 'repair' : 'sell offer'} from ${name}`,
-        text: adminBody,
-      })
+      resend.emails.send({ from: FROM, to: ADMIN_EMAIL, subject: adminSubject, text: adminBody })
     )
   }
 
