@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Fraunces } from "next/font/google";
+import { Geist, Caveat } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Grain from "@/components/Grain";
 
 const geist = Geist({ variable: "--font-sans", subsets: ["latin"] });
-const fraunces = Fraunces({
+const caveat = Caveat({
   variable: "--font-display",
   subsets: ["latin"],
-  style: ["normal", "italic"],
-  weight: ["300", "400", "500", "600", "700", "900"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -46,7 +45,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geist.variable} ${fraunces.variable}`}>
+    <html lang="en" className={`${geist.variable} ${caveat.variable}`}>
       <body className="min-h-screen flex flex-col bg-[#F7F4EE] dark:bg-[#0d0c0a] text-neutral-900 dark:text-white transition-colors">
         <Grain />
         <Nav />
