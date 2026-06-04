@@ -44,11 +44,11 @@ export default function Home() {
 
         {/* Background photo */}
         <div className="absolute inset-0 z-0">
-          <img src="/images/hero.jpg" alt="" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} />
+          <img src="/images/hero.jpg" alt="" className="w-full h-full object-cover" style={{ objectPosition: 'center 30%' }} />
           {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/60" />
-          {/* Extra gradient to darken bottom where buttons sit */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
+          <div className="absolute inset-0 bg-black/50" />
+          {/* Gradient — fades photo INTO teal below */}
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.45) 55%, #2BD9C6 100%)' }} />
         </div>
 
         {/* Teal accent bar right */}
@@ -86,7 +86,7 @@ export default function Home() {
           {/* Tagline + CTAs */}
           <div className="mt-10 mb-0 flex flex-col sm:flex-row items-start gap-6 sm:gap-10">
             <div>
-              <p className="text-white font-black text-xl md:text-2xl leading-tight max-w-xs">
+              <p className="font-display italic text-white text-2xl md:text-3xl leading-tight max-w-xs font-light">
                 Your board&apos;s not dead yet.
               </p>
               <p className="text-white/50 text-sm mt-2 max-w-xs leading-relaxed">
@@ -118,10 +118,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Wave divider into teal */}
-        <div className="mt-8">
-          <WaveDivider fill="#2BD9C6" bg="transparent" />
-        </div>
       </section>
 
       {/* ── THREE PILLARS ── */}
@@ -139,7 +135,7 @@ export default function Home() {
             >
               <p className="text-black/30 text-6xl font-black leading-none mb-4">{num}</p>
               <p className="text-black font-black uppercase text-xl tracking-tight mb-2">{label}</p>
-              <p className="text-black/60 text-sm leading-relaxed mb-6">{desc}</p>
+              <p className="font-display italic text-black/70 text-base leading-relaxed mb-6 font-normal">{desc}</p>
               <span className="text-black font-black text-xs uppercase tracking-widest group-hover:underline underline-offset-4">{cta} →</span>
             </Link>
           ))}
