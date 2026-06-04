@@ -40,21 +40,28 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
 
       {/* ── HERO ── */}
-      <section className="relative flex flex-col justify-end pt-20 pb-0 px-4 md:px-8 bg-[#F7F4EE] dark:bg-[#0d0c0a] overflow-hidden min-h-[85vh]">
+      <section className="relative flex flex-col justify-end pt-20 pb-0 px-4 md:px-8 overflow-hidden min-h-[85vh]">
+
+        {/* Background photo */}
+        <div className="absolute inset-0 z-0">
+          <img src="/images/hero.jpg" alt="" className="w-full h-full object-cover object-center" />
+          {/* Dark gradient overlay — heavier at top/bottom, lighter in middle */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
+        </div>
 
         {/* Teal accent bar right */}
-        <div className="absolute top-0 right-0 w-2 h-full bg-[#2BD9C6]" />
+        <div className="absolute top-0 right-0 w-2 h-full bg-[#2BD9C6] z-10" />
 
         {/* Vertical side text — left edge */}
-        <div className="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 -rotate-90 origin-center hidden sm:block">
-          <p className="text-[10px] font-black uppercase tracking-[0.45em] text-neutral-300 dark:text-white/20 whitespace-nowrap">
+        <div className="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 -rotate-90 origin-center hidden sm:block z-10">
+          <p className="text-[10px] font-black uppercase tracking-[0.45em] text-white/30 whitespace-nowrap">
             DINGS FIXED · BOARDS SOLD · SW UK
           </p>
         </div>
 
         {/* Stamp badge — top right corner */}
-        <div className="absolute top-8 right-8 md:right-10">
-          <StampBadge className="w-20 h-20 md:w-24 md:h-24 text-neutral-400 dark:text-white/30" />
+        <div className="absolute top-8 right-8 md:right-10 z-10">
+          <StampBadge className="w-20 h-20 md:w-24 md:h-24 text-white/50" />
         </div>
 
         {/* Main content */}
@@ -66,11 +73,10 @@ export default function Home() {
           </p>
 
           {/* Giant headline */}
-          <h1 className="font-black uppercase leading-[0.82] tracking-tighter text-neutral-900 dark:text-white -ml-1">
+          <h1 className="font-black uppercase leading-[0.82] tracking-tighter text-white -ml-1">
             <span className="block text-[23vw] md:text-[19vw]">BOZO</span>
-            <span className="block text-[23vw] md:text-[19vw] text-neutral-900 dark:text-white relative">
+            <span className="block text-[23vw] md:text-[19vw] relative">
               BOARDS
-              {/* Teal underline accent */}
               <span className="absolute -bottom-2 left-0 w-1/3 h-[3px] bg-[#2BD9C6]" />
             </span>
           </h1>
@@ -78,10 +84,10 @@ export default function Home() {
           {/* Tagline + CTAs */}
           <div className="mt-10 mb-0 flex flex-col sm:flex-row items-start gap-6 sm:gap-10">
             <div>
-              <p className="text-neutral-900 dark:text-white font-black text-xl md:text-2xl leading-tight max-w-xs">
+              <p className="text-white font-black text-xl md:text-2xl leading-tight max-w-xs">
                 Your board&apos;s not dead yet.
               </p>
-              <p className="text-neutral-400 dark:text-white/40 text-sm mt-2 max-w-xs leading-relaxed">
+              <p className="text-white/50 text-sm mt-2 max-w-xs leading-relaxed">
                 We fix dings, sell used shapes, and buy boards you no longer ride.
               </p>
             </div>
@@ -89,22 +95,22 @@ export default function Home() {
               <Link href="/repair" className="px-7 py-3.5 bg-[#2BD9C6] text-black font-black uppercase tracking-wide text-sm rounded hover:bg-[#1fc4b3] transition">
                 Submit a Repair
               </Link>
-              <Link href="/services" className="px-7 py-3.5 border-2 border-neutral-300 dark:border-white/20 text-neutral-700 dark:text-white font-black uppercase tracking-wide text-sm rounded hover:border-neutral-600 dark:hover:border-white transition">
+              <Link href="/services" className="px-7 py-3.5 border-2 border-white/30 text-white font-black uppercase tracking-wide text-sm rounded hover:border-white hover:bg-white/10 transition">
                 View Pricing
               </Link>
             </div>
           </div>
 
           {/* Bottom stat strip */}
-          <div className="flex gap-8 mt-10 pb-2 border-t border-neutral-200 dark:border-white/10 pt-6">
+          <div className="flex gap-8 mt-10 pb-2 border-t border-white/20 pt-6">
             {[
               { n: '2–5', label: 'Day turnaround' },
               { n: 'All', label: 'Board types' },
               { n: '£20+', label: 'Starting from' },
             ].map(({ n, label }) => (
               <div key={label}>
-                <p className="text-2xl font-black text-neutral-900 dark:text-white leading-none">{n}</p>
-                <p className="text-xs text-neutral-400 dark:text-white/30 uppercase tracking-widest mt-1">{label}</p>
+                <p className="text-2xl font-black text-white leading-none">{n}</p>
+                <p className="text-xs text-white/40 uppercase tracking-widest mt-1">{label}</p>
               </div>
             ))}
           </div>
