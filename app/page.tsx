@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import WaveDivider from '@/components/WaveDivider'
+import StampBadge from '@/components/StampBadge'
 import { useInView } from '@/hooks/useInView'
 
 const StoryStrip = dynamic(() => import('@/components/StoryStrip'), { ssr: false })
@@ -39,35 +40,78 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
 
       {/* ── HERO ── */}
-      <section className="relative flex flex-col justify-end pt-24 pb-0 px-4 bg-[#F7F4EE] dark:bg-[#0d0c0a] overflow-hidden">
+      <section className="relative flex flex-col justify-end pt-20 pb-0 px-4 md:px-8 bg-[#F7F4EE] dark:bg-[#0d0c0a] overflow-hidden min-h-[85vh]">
+
+        {/* Teal accent bar right */}
         <div className="absolute top-0 right-0 w-2 h-full bg-[#2BD9C6]" />
 
-        <div className="absolute top-8 left-4 md:left-8">
-          <p className="text-neutral-900 dark:text-white text-xs font-black uppercase tracking-[0.4em]">Est. 2024</p>
-          <p className="text-neutral-400 dark:text-white/30 text-xs uppercase tracking-widest mt-0.5">South West UK</p>
+        {/* Vertical side text — left edge */}
+        <div className="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 -rotate-90 origin-center hidden sm:block">
+          <p className="text-[10px] font-black uppercase tracking-[0.45em] text-neutral-300 dark:text-white/20 whitespace-nowrap">
+            DINGS FIXED · BOARDS SOLD · SW UK
+          </p>
         </div>
 
-        <div className="relative z-10 max-w-6xl">
-          <h1 className="text-[22vw] md:text-[18vw] font-black uppercase leading-[0.85] tracking-tighter text-neutral-900 dark:text-white -ml-1">
-            BOZO<br />BOARDS
+        {/* Stamp badge — top right corner */}
+        <div className="absolute top-8 right-8 md:right-10">
+          <StampBadge className="w-20 h-20 md:w-24 md:h-24 text-neutral-400 dark:text-white/30" />
+        </div>
+
+        {/* Main content */}
+        <div className="relative z-10 max-w-6xl pl-4 sm:pl-8">
+
+          {/* Small label above */}
+          <p className="text-[#2BD9C6] text-xs font-black uppercase tracking-[0.5em] mb-4 md:mb-6">
+            Surfboard Repairs
+          </p>
+
+          {/* Giant headline */}
+          <h1 className="font-black uppercase leading-[0.82] tracking-tighter text-neutral-900 dark:text-white -ml-1">
+            <span className="block text-[23vw] md:text-[19vw]">BOZO</span>
+            <span className="block text-[23vw] md:text-[19vw] text-neutral-900 dark:text-white relative">
+              BOARDS
+              {/* Teal underline accent */}
+              <span className="absolute -bottom-2 left-0 w-1/3 h-[3px] bg-[#2BD9C6]" />
+            </span>
           </h1>
-          <div className="mt-8 mb-0 flex flex-col sm:flex-row items-start gap-6">
-            <p className="text-neutral-500 dark:text-white/50 text-base max-w-xs leading-relaxed">
-              Ding repairs done right. We fix boards, sell used shapes, and buy boards you no longer ride.
-            </p>
-            <div className="flex gap-3 shrink-0">
-              <Link href="/repair" className="px-6 py-3 bg-[#2BD9C6] text-black font-black uppercase tracking-wide text-sm rounded hover:bg-[#1fc4b3] transition">
-                Submit Repair
+
+          {/* Tagline + CTAs */}
+          <div className="mt-10 mb-0 flex flex-col sm:flex-row items-start gap-6 sm:gap-10">
+            <div>
+              <p className="text-neutral-900 dark:text-white font-black text-xl md:text-2xl leading-tight max-w-xs">
+                Your board&apos;s not dead yet.
+              </p>
+              <p className="text-neutral-400 dark:text-white/40 text-sm mt-2 max-w-xs leading-relaxed">
+                We fix dings, sell used shapes, and buy boards you no longer ride.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 shrink-0 sm:mt-1">
+              <Link href="/repair" className="px-7 py-3.5 bg-[#2BD9C6] text-black font-black uppercase tracking-wide text-sm rounded hover:bg-[#1fc4b3] transition">
+                Submit a Repair
               </Link>
-              <Link href="/services" className="px-6 py-3 border-2 border-neutral-300 dark:border-white/20 text-neutral-700 dark:text-white font-black uppercase tracking-wide text-sm rounded hover:border-neutral-500 dark:hover:border-white transition">
-                Pricing
+              <Link href="/services" className="px-7 py-3.5 border-2 border-neutral-300 dark:border-white/20 text-neutral-700 dark:text-white font-black uppercase tracking-wide text-sm rounded hover:border-neutral-600 dark:hover:border-white transition">
+                View Pricing
               </Link>
             </div>
+          </div>
+
+          {/* Bottom stat strip */}
+          <div className="flex gap-8 mt-10 pb-2 border-t border-neutral-200 dark:border-white/10 pt-6">
+            {[
+              { n: '2–5', label: 'Day turnaround' },
+              { n: 'All', label: 'Board types' },
+              { n: '£20+', label: 'Starting from' },
+            ].map(({ n, label }) => (
+              <div key={label}>
+                <p className="text-2xl font-black text-neutral-900 dark:text-white leading-none">{n}</p>
+                <p className="text-xs text-neutral-400 dark:text-white/30 uppercase tracking-widest mt-1">{label}</p>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Wave divider into teal */}
-        <div className="mt-12">
+        <div className="mt-8">
           <WaveDivider fill="#2BD9C6" bg="transparent" />
         </div>
       </section>
