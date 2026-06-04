@@ -50,8 +50,6 @@ export default function Home() {
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.5) 70%, rgba(43,217,198,0.85) 100%)' }} />
         </div>
 
-        {/* Teal accent bar right */}
-        <div className="absolute top-0 right-0 w-2 h-full bg-[#2BD9C6] z-10" />
 
         {/* Vertical side text — left edge */}
         <div className="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 -rotate-90 origin-center hidden sm:block z-10">
@@ -64,7 +62,8 @@ export default function Home() {
         <div className="relative z-10 max-w-6xl pl-4 sm:pl-8">
 
           {/* Small label above */}
-          <p className="text-[#2BD9C6] text-xs font-black uppercase tracking-[0.5em] mb-4 md:mb-6">
+          <p className="inline-flex items-center gap-2 text-[#2BD9C6] text-sm font-black uppercase tracking-[0.4em] mb-4 md:mb-6 bg-[#2BD9C6]/15 border border-[#2BD9C6]/40 px-3 py-1 rounded">
+            <span className="w-2 h-2 rounded-full bg-[#2BD9C6] inline-block" />
             Surfboard Repairs
           </p>
 

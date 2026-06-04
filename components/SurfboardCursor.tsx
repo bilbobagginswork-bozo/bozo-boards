@@ -1,0 +1,71 @@
+'use client'
+import { useEffect, useState, useCallback } from 'react'
+
+function Board() {
+  return (
+    <svg width="18" height="46" viewBox="0 0 18 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9,1 C13,3 16,11 16,23 C16,35 13,42 9,45 C5,42 2,35 2,23 C2,11 5,3 9,1 Z"
+        fill="white" stroke="#2BD9C6" strokeWidth="1.5" strokeLinejoin="round"/>
+      <line x1="9" y1="1" x2="9" y2="45" stroke="#2BD9C6" strokeWidth="0.75" strokeDasharray="3 2"/>
+      <path d="M7,43 L3,50 L12,47 L9,43 Z" fill="#2BD9C6"/>
+    </svg>
+  )
+}
+
+function BrokenBoard() {
+  return (
+    <svg width="22" height="52" viewBox="0 0 22 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Top half */}
+      <path d="M9,1 C13,3 16,11 16,22 L2,25 C2,13 5,3 9,1 Z"
+        fill="white" stroke="#2BD9C6" strokeWidth="1.5"/>
+      {/* Bottom half - slightly offset */}
+      <path d="M16.5,26 C17,34 14,42 9.5,47 C5.5,44 2.5,35 3,27 L16.5,26 Z"
+        fill="white" stroke="#2BD9C6" strokeWidth="1.5" transform="translate(1,1)"/>
+      {/* Crack line */}
+      <path d="M7,20 L11,24 L6,29 L12,33" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" fill="none"/>
+      {/* Impact marks */}
+      <line x1="14" y1="22" x2="18" y2="18" stroke="#ef4444" strokeWidth="1.2"/>
+      <line x1="15" y1="25" x2="20" y2="24" stroke="#ef4444" strokeWidth="1.2"/>
+      {/* Fin */}
+      <path d="M8,46 L4,52 L13,49 L10,46 Z" fill="#2BD9C6" transform="translate(1,0)"/>
+    </svg>
+  )
+}
+
+export default function SurfboardCursor() {
+  const [pos, setPos] = useState({ x: -200, y: -200 })
+  const [broken, setBroken] = useState(false)
+  const [isTouch, setIsTouch] = useState(true)
+
+  const triggerBreak = useCallback(() => {
+    setBroken(true)
+    setTimeout(() => setBroken(false), 600)
+  }, [])
+
+  useEffect(() => {
+    const hasMouse = window.matchMedia('(pointer: fine)').matches
+    if (!hasMouse) return
+    setIsTouch(false)
+
+    const onMove = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY })
+
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mousedown', triggerBreak)
+
+    return () => {
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mousedown', triggerBreak)
+    }
+  }, [triggerBreak])
+
+  if (isTouch) return null
+
+  return (
+    <div
+      className="fixed pointer-events-none z-[9999] transition-transform duration-75"
+      style={{ left: pos.x, top: pos.y, transform: 'translate(-50%, -20%)' }}
+    >
+      {broken ? <BrokenBoard /> : <Board />}
+    </div>
+  )
+}

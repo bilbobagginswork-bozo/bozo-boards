@@ -3,6 +3,7 @@ import { Geist, Caveat } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Grain from "@/components/Grain";
+import SurfboardCursor from "@/components/SurfboardCursor";
 
 const geist = Geist({ variable: "--font-sans", subsets: ["latin"] });
 const caveat = Caveat({
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${geist.variable} ${caveat.variable}`}>
       <body className="min-h-screen flex flex-col bg-[#F7F4EE] dark:bg-[#0d0c0a] text-neutral-900 dark:text-white transition-colors">
         <Grain />
+        <SurfboardCursor />
         <Nav />
         {children}
       </body>
