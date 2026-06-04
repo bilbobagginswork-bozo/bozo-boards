@@ -63,8 +63,8 @@ export default function Home() {
 
           {/* Giant headline */}
           <h1 className="font-black uppercase leading-[0.82] tracking-tighter text-white -ml-1">
-            <span className="block text-[23vw] md:text-[19vw]">BOZO</span>
-            <span className="block text-[23vw] md:text-[19vw] relative">
+            <span className="block text-[19vw]">BOZO</span>
+            <span className="block text-[19vw] relative">
               BOARDS
               <span className="absolute -bottom-2 left-0 w-1/3 h-[3px] bg-[#2BD9C6]" />
             </span>
